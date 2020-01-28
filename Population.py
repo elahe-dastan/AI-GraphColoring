@@ -7,9 +7,10 @@ def choose_best_fit(chromosomes):
     best_fit_value = 0
     best_fit_chromosome = None
     for chromosome in chromosomes:
-        if chromosome.fitness_function() > best_fit_value:
+        fitness = chromosome.fitness_function()
+        if fitness > best_fit_value:
             best_fit_chromosome = chromosome
-            best_fit_value = chromosome.fitness_function()
+            best_fit_value = fitness
     return best_fit_chromosome
 
 
@@ -64,28 +65,30 @@ class Population:
             random_color = randrange(4)
             self.chromosomes[random_chromosome].nodes[random_genome].color = random_color
 
-    def evolution(self, tornument_size):
+    def evolution(self, tornument_size, mutation_rate):
         for i in range(self.number_of_generations):
             self.best_fitness_list.append(self.best_fitness_value())
             self.worst_fitness_list.append(self.worst_fitness_value())
             self.average_fitness_list.append(self.avg_fitness_value())
             self.tornument_selection(tornument_size)
             self.new_population()
-            self.mutation(0.02)
+            self.mutation(mutation_rate)
         self.plot()
 
     def best_fitness_value(self):
         best_fit_value = 0
         for chromosome in self.chromosomes:
-            if chromosome.fitness_function() > best_fit_value:
-                best_fit_value = chromosome.fitness_function()
+            chromosome_fitness = chromosome.fitness_function()
+            if chromosome_fitness > best_fit_value:
+                best_fit_value = chromosome_fitness
         return best_fit_value
 
     def worst_fitness_value(self):
         worst_fit_value = 1000000
         for chromosome in self.chromosomes:
-            if chromosome.fitness_function() < worst_fit_value:
-                worst_fit_value = chromosome.fitness_function()
+            chromosome_fitness = chromosome.fitness_function()
+            if chromosome_fitness < worst_fit_value:
+                worst_fit_value = chromosome_fitness
         return worst_fit_value
 
     def avg_fitness_value(self):

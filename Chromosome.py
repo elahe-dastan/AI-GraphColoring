@@ -9,11 +9,15 @@ class Chromosome:
     def fitness_function(self):
         value = 0
         for node in self.nodes:
-            color = node.color
-            for neighbour_node in node.E:
-                if color == neighbour_node.color:
-                    value += 1
+            value += self.delta(node)
         return value/self.edge_size()
+
+    def delta(self, node):
+        value = 0
+        for neighbour_node in node.E:
+            if node.color == neighbour_node.color:
+                value += 1
+        return value
 
     def edge_size(self):
         size = 0

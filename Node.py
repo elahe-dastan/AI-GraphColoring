@@ -3,8 +3,8 @@ from random import randrange
 
 class Node:
 
-    def __init__(self,N):
-        self.N = N
+    def __init__(self,id):
+        self.id = id
         self.color = randrange(4)
 
     def add_edge(self, E):
